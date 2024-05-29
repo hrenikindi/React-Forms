@@ -13,6 +13,8 @@ function App() {
   });
 
   const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+  const namePattern = /^[a-zA-Z ]*$/;
+  const contactPattern = /^[0-9]{10}$/;
 
   function handleSubmit() {
     let formIsValid = true;
@@ -26,10 +28,16 @@ function App() {
     if (firstName.trim() === "") {
       emptyFields.firstName = "Please enter your FirstName";
       formIsValid = false;
+    } else if (!namePattern.test(firstName)) {
+      emptyFields.firstName = "FirstName should not contain special characters";
+      formIsValid = false;
     }
 
     if (lastName.trim() === "") {
       emptyFields.lastName = "Please enter your LastName";
+      formIsValid = false;
+    } else if (!namePattern.test(lastName)) {
+      emptyFields.lastName = "LastName should not contain special characters";
       formIsValid = false;
     }
 
@@ -41,8 +49,12 @@ function App() {
       formIsValid = false;
     }
 
-    if (contact.trim() === "") {
-      emptyFields.contact = "Please enter your Contact";
+    if (
+      contact.trim() === "" ||
+      contact.trim().length !== 10 ||
+      !contactPattern.test(contact)
+    ) {
+      emptyFields.contact = "Please enter a valid Contact";
       formIsValid = false;
     }
 
